@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { PDFViewer } from "@react-pdf/renderer";
+import MyDocument from "./MyDocument";
 function Dashboard() {
   const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
   const [proyecto, setProyecto] = useState(null);
   const [showForm, setShowForm] = useState(false);
-  const [mostrarProyecto, setMostrarProyecto] = useState(false);
   const [hasClicked, setHasClicked] = useState(false);
+  const [showPDF, setShowPDF] = useState(false);
 
   const handleStart = () => {
     setShowForm(true);
@@ -68,6 +69,7 @@ function Dashboard() {
     try {
       const res = await axios.get("http://localhost:3000/proyecto/" + userId);
       setProyecto(res.data);
+      console.log("Proyecto más reciente:", res.data);
     } catch (error) {
       console.error("Error al obtener el proyecto más reciente:", error);
     }
@@ -191,12 +193,39 @@ function Dashboard() {
                   <button
                     type="button"
                     className="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                    onClick={() => {
+                      setHasClicked(false); // Cierra el modal del proyecto
+                      setShowPDF(true); // Abre el modal del PDF
+                    }}
+                  >
+                    Ver PDF
+                  </button>
+                  <button
+                    type="button"
+                    className="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => setHasClicked(false)}
                   >
                     Cerrar
                   </button>
                 </div>
               </div>
+            </div>
+          </div>
+        )}
+        {showPDF && (
+          <div className="fixed top-0 left-0 flex items-center justify-center w-screen h-screen bg-gray-800 bg-opacity-50">
+            <div className="w-screen h-screen p-5 bg-white rounded">
+              {" "}
+              {/* Aquí se cambió el tamaño */}
+              <PDFViewer width="100%" height="950">
+                <MyDocument proyecto={proyecto} />
+              </PDFViewer>
+              <button
+                onClick={() => setShowPDF(false)}
+                className="px-4 py-2 text-white bg-blue-500 rounded"
+              >
+                Cerrar PDF
+              </button>
             </div>
           </div>
         )}
