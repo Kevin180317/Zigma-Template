@@ -6,8 +6,12 @@ const mysql = require("mysql");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 const multer = require("multer");
-const upload = multer();
+const storage = multer.memoryStorage();
 
+const upload = multer({ storage: storage }).fields([
+  { name: "imagen", maxCount: 1 },
+  { name: "imagen2", maxCount: 1 },
+]);
 const app = express();
 
 app.use(
@@ -125,17 +129,32 @@ app.post("/logout", (req, res) => {
   }
 });
 
-app.post("/upload", upload.single("imagen"), (req, res) => {
-  console.log("Archivo recibido:", req.file);
-
+app.post("/upload", upload, (req, res) => {
   // Convertir el archivo a un Buffer para almacenarlo en MySQL.
-  const imagen = Buffer.from(req.file.buffer);
   const nombre = req.body.nombre;
+  const imagen = Buffer.from(req.files.imagen[0].buffer);
   const opcion = req.body.opcion;
+  const ubicacion = req.body.ubicacion;
+  const profesional = req.body.profesional;
+  const descripcion = req.body.descripcion;
+  const objetivos = req.body.objetivos;
+  const enumere = req.body.enumere;
+  const imagen2 = Buffer.from(req.files.imagen2[0].buffer);
   const userId = req.body.userId;
   connection.query(
-    "INSERT INTO mi_tabla (nombre, imagen, opcion, userId) VALUES (?, ?, ?, ?)",
-    [nombre, imagen, opcion, userId],
+    "INSERT INTO mi_tabla (nombre, imagen, opcion, ubicacion, profesional, descripcion, objetivos, enumere, imagen2, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    [
+      nombre,
+      imagen,
+      opcion,
+      ubicacion,
+      profesional,
+      descripcion,
+      objetivos,
+      enumere,
+      imagen2,
+      userId,
+    ],
     (error, results) => {
       if (error) {
         console.error("Error al guardar los datos en MySQL:", error);
@@ -168,6 +187,7 @@ app.get("/proyecto/:userId", (req, res) => {
         // Convierte la imagen a una cadena Base64.
         const proyecto = results[0];
         proyecto.imagen = Buffer.from(proyecto.imagen).toString("base64");
+        proyecto.imagen2 = Buffer.from(proyecto.imagen2).toString("base64");
 
         // Devuelve el proyecto.
         res.json(proyecto);

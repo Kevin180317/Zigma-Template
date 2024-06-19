@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Page,
   Text,
@@ -20,8 +21,8 @@ const styles = StyleSheet.create({
   },
   image: {
     margin: 10,
-    width: 150,
-    height: 150,
+    width: 650,
+    height: 650,
   },
 });
 
@@ -30,15 +31,24 @@ const MyDocument = ({ proyecto }) => (
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.section}>
-        <Text>{proyecto.nombre}</Text>
+        <Text>Nombre: {proyecto.nombre}</Text>
       </View>
       <Image
         style={styles.image}
         src={`data:image/jpeg;base64,${proyecto.imagen}`}
       />
       <View style={styles.section}>
-        <Text>{proyecto.opcion}</Text>
+        <Text>Ubicación: {proyecto.ubicacion}</Text>
+        <Text>Profesional: {proyecto.profesional}</Text>
+        <Text>Descripción: {proyecto.descripcion}</Text>
+        <Text>Objetivos: {proyecto.objetivos}</Text>
+        <Text>Enumere: {proyecto.enumere}</Text>
       </View>
+      <Image
+        style={styles.image}
+        src={`data:image/jpeg;base64,${proyecto.imagen2}`}
+      />
+      <Text>Opción: {proyecto.opcion}</Text>
     </Page>
   </Document>
 );

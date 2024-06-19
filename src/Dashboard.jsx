@@ -46,6 +46,13 @@ function Dashboard() {
     formData.append("nombre", event.target.nombre.value);
     formData.append("imagen", event.target.imagen.files[0]);
     formData.append("opcion", event.target.opcion.value);
+    formData.append("ubicacion", event.target.ubicacion.value);
+    formData.append("profesional", event.target.profesional.value);
+    formData.append("descripcion", event.target.descripcion.value);
+    formData.append("objetivos", event.target.objetivos.value);
+    formData.append("enumere", event.target.enumere.value);
+    formData.append("imagen2", event.target.imagen2.files[0]);
+
     formData.append("userId", userId);
     try {
       const response = await axios.post(
@@ -139,12 +146,77 @@ function Dashboard() {
             className="text-black [&>label]:text-white [&>h4]:text-white [&>h3]:text-white [&>input]:text-white "
           >
             <div className="py-8">
-              <div className="flex flex-col mb-4">
-                <input type="text" name="nombre" />
-                <input type="file" name="imagen" />
-                <select name="opcion">
-                  <option value="option1">Opción 1</option>
-                  <option value="option2">Opción 2</option>
+              <div className="flex flex-col mb-4 [&>label]:text-white [&>h1]:text-white">
+                <label htmlFor="nombre">Nombre del proyecto:</label>
+                <input
+                  type="text"
+                  name="nombre"
+                  className="w-64 h-10 border border-gray-300 rounded mb-2"
+                />
+                <label htmlFor="ubicacion">Ubicacion</label>
+                <input
+                  type="text"
+                  name="ubicacion"
+                  className="w-64 h-10 border border-gray-300 rounded mb-2"
+                />
+                <label htmlFor="profesional">
+                  Profesional del metodo DMAIC
+                </label>
+                <input
+                  type="text"
+                  name="profesional"
+                  className="w-64 h-10 border border-gray-300 rounded mb-2"
+                />
+                <label htmlFor="descripcion">Realizada el</label>
+                <input
+                  type="date"
+                  name="descripcion"
+                  className="w-64 h-10 border border-gray-300 rounded mb-2"
+                />
+                <label htmlFor="imagen">Imagen del proyecto:</label>
+                <input type="file" accept=".jpeg, .jpg" name="imagen" />
+
+                <h1 className="text-2xl fontbold py-4">Definir</h1>
+                <label htmlFor="objetivos">
+                  Cuales son los objetivos del proyecto?
+                </label>
+                <input
+                  type="text"
+                  name="objetivos"
+                  className="w-64 h-10 border border-gray-300 rounded mb-2"
+                />
+                <label htmlFor="enumere">
+                  Enumere los productos finales para los clientes (internos y
+                  externos)
+                </label>
+                <input
+                  type="text"
+                  name="enumere"
+                  className="w-64 h-10 border border-gray-300 rounded mb-2"
+                />
+                <label htmlFor="imagen2">Imagen de Definir</label>
+                <input type="file" accept=".jpeg, .jpg" name="imagen2" />
+
+                <label htmlFor="imagendescripcion1">
+                  Descripcion de la imagen
+                </label>
+                <select name="opcion" className="w-64 py-2">
+                  <option value="Carta del proyecto (Project Charter)">
+                    Carta del proyecto (Project Charter)
+                  </option>
+                  <option value="Matriz de la voz del cliente (VOC)">
+                    Matriz de la voz del cliente (VOC)
+                  </option>
+                  <option value="Despliegue de funcion de la calidad (QFD)">
+                    Despliegue de funcion de la calidad (QFD)
+                  </option>
+                  <option value="Analisis de riego">Analisis de riego</option>
+                  <option value="Matriz de vianilidad del proyecto">
+                    Matriz de vianilidad del proyecto
+                  </option>
+                  <option value="Mapa de procesos (SIPOC)">
+                    Mapa de procesos (SIPOC)
+                  </option>
                 </select>
               </div>
               <button
@@ -182,6 +254,15 @@ function Dashboard() {
                       src={`data:image/jpeg;base64,${proyecto.imagen}`}
                       alt={proyecto.nombre}
                     />
+                    <p>Ubicación: {proyecto.ubicacion}</p>
+                    <p>Profesional: {proyecto.profesional}</p>
+                    <p>Descripción: {proyecto.descripcion}</p>
+                    <p>Objetivos: {proyecto.objetivos}</p>
+                    <p>Enumere: {proyecto.enumere}</p>
+                    <img
+                      src={`data:image/jpeg;base64,${proyecto.imagen2}`}
+                      alt="Imagen 2"
+                    />
                     <h4>Opción: {proyecto.opcion}</h4>
                   </div>
                 ) : (
@@ -217,7 +298,7 @@ function Dashboard() {
             <div className="w-screen h-screen p-5 bg-white rounded">
               {" "}
               {/* Aquí se cambió el tamaño */}
-              <PDFViewer width="100%" height="950">
+              <PDFViewer width="100%" height="95%">
                 <MyDocument proyecto={proyecto} />
               </PDFViewer>
               <button
