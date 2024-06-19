@@ -5,8 +5,10 @@ import { useNavigate } from "react-router-dom";
 function Dashboard() {
   const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
-
+  const [proyecto, setProyecto] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [mostrarProyecto, setMostrarProyecto] = useState(false);
+  const [hasClicked, setHasClicked] = useState(false);
 
   const handleStart = () => {
     setShowForm(true);
@@ -39,23 +41,43 @@ function Dashboard() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const data = new FormData(event.target);
-    const formData = Object.fromEntries(data.entries());
+    const formData = new FormData();
+    formData.append("nombre", event.target.nombre.value);
+    formData.append("imagen", event.target.imagen.files[0]);
+    formData.append("opcion", event.target.opcion.value);
+    formData.append("userId", userId);
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
-    const response = await fetch("/api/formData", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-
-    if (response.ok) {
-      console.log("Datos del formulario enviados con éxito");
-    } else {
-      console.error("Error al enviar los datos del formulario");
+      console.log("Respuesta del servidor:", response.data);
+    } catch (error) {
+      console.error("Error al subir la imagen:", error);
     }
   };
+
+  const obtenerProyectoMasReciente = async () => {
+    setHasClicked(true);
+    try {
+      const res = await axios.get("http://localhost:3000/proyecto/" + userId);
+      setProyecto(res.data);
+    } catch (error) {
+      console.error("Error al obtener el proyecto más reciente:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (hasClicked && userId) {
+      obtenerProyectoMasReciente();
+    }
+  }, [hasClicked, userId]);
 
   useEffect(() => {
     if (!userId) {
@@ -69,38 +91,44 @@ function Dashboard() {
   }, [userId, navigate]);
 
   return (
-    <div className="flex bg-blue-500 gap-4 overflow-x-hidden">
+    <div className="flex gap-4 overflow-x-hidden bg-blue-500">
       <aside
         className={`flex flex-col justify-between w-64 ${
           !showForm ? "h-screen" : ""
         } bg-white text-blue-500 shadow-lg`}
       >
         <div className="p-4 text-center">
-          <h1 className="text-4xl mb-4">Dashboard</h1>
-          <h2 className="text-2xl mb-4">Bienvenido, usuario {userId}</h2>
+          <h1 className="mb-4 text-4xl">Dashboard</h1>
+          <h2 className="mb-4 text-2xl">Bienvenido, usuario {userId}</h2>
         </div>
         <div className="p-4">
           <button
             onClick={handleLogout}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition-colors duration-300 "
+            className="px-4 py-2 text-white transition-colors duration-300 bg-blue-500 rounded hover:bg-blue-700 "
           >
             Cerrar sesión
           </button>
         </div>
       </aside>
       <section className="text-white">
-        <h1 className="text-4xl p-4">Contenido del dashboard</h1>
+        <h1 className="p-4 text-4xl">Contenido del dashboard</h1>
         <hr className="w-screen mb-8" />
         {!showForm ? (
-          <div className="bg-white rounded-lg shadow-lg p-6 w-96">
-            <h2 className="text-xl font-semibold text-blue-500 mb-4">
+          <div className="p-6 bg-white rounded-lg shadow-lg w-96">
+            <h2 className="mb-4 text-xl font-semibold text-blue-500">
               Crear nuevo proyecto
             </h2>
             <button
               onClick={handleStart}
-              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition-colors duration-300"
+              className="px-4 py-2 mt-4 text-white transition-colors duration-300 bg-blue-500 rounded hover:bg-blue-700"
             >
               Comenzar
+            </button>
+            <button
+              className="px-4 py-2 mt-4 text-white transition-colors duration-300 bg-blue-500 rounded hover:bg-blue-700"
+              onClick={obtenerProyectoMasReciente}
+            >
+              Obtener proyecto más reciente
             </button>
           </div>
         ) : (
@@ -108,325 +136,69 @@ function Dashboard() {
             onSubmit={handleSubmit}
             className="text-black [&>label]:text-white [&>h4]:text-white [&>h3]:text-white [&>input]:text-white "
           >
-            <label className="block mb-2">Nombre del proyecto:</label>
-            <input type="text" className="px-3 py-2 border rounded mt-1" />
-
-            <label className="block mb-2">Ubicación:</label>
-            <input type="text" className="px-3 py-2 border rounded mt-1" />
-
-            <label className="block mb-2">Address:</label>
-            <input type="text" className="px-3 py-2 border rounded mt-1" />
-
-            <label className="block mb-2">Profesional del método DMAIC:</label>
-            <input type="text" className="px-3 py-2 border rounded mt-1" />
-
-            <label className="block mb-2">Realizada el:</label>
-            <input type="date" className="px-3 py-2 border rounded mt-1" />
-
-            <label className="block mb-2">Date Inspección:</label>
-            <input type="date" className="px-3 py-2 border rounded mt-1" />
-
-            <h3 className="text-xl mt-4 mb-2">Ciclo DMAIC</h3>
-
-            <h4 className="text-lg mt-4 mb-2">Definir</h4>
-            <label className="block mb-2">
-              ¿Cuáles son los objetivos del proyecto?
-            </label>
-            <textarea
-              className=" px-3 py-2 border rounded mt-1"
-              rows="2"
-            ></textarea>
-
-            <label className="block mb-2">
-              Enumere los productos finales para los clientes (internos y
-              externos)
-            </label>
-            <textarea
-              className=" px-3 py-2 border rounded mt-1"
-              rows="2"
-            ></textarea>
-
-            <h4 className="text-lg mt-4 mb-2">Medida</h4>
-            <label className="block mb-2">
-              ¿Se ha desarrollado un plan de recopilación de datos para
-              cuantificar el problema?
-            </label>
-            <div className="flex gap-4">
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="dataCollectionPlan"
-                  value="Sí"
-                  className="mr-2 text-white"
-                />
-                Sí
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="dataCollectionPlan"
-                  value="No"
-                  className="mr-2"
-                />
-                No
-              </label>
-            </div>
-
-            <label className="block mb-2">
-              ¿Se determina el rendimiento actual del proceso a través de la
-              evaluación comparativa?
-            </label>
-            <div className="flex gap-4">
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="benchmarking"
-                  value="Sí"
-                  className="mr-2"
-                />
-                Sí
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="benchmarking"
-                  value="No"
-                  className="mr-2"
-                />
-                No
-              </label>
-            </div>
-
-            <label className="block mb-2">Planteamiento del problema</label>
-            <textarea
-              className=" px-3 py-2 border rounded mt-1"
-              rows="2"
-            ></textarea>
-
-            <h4 className="text-lg mt-4 mb-2">Analizar</h4>
-            <label className="block mb-2">
-              ¿Cuáles son los objetivos del rendimiento?
-            </label>
-            <textarea
-              className=" px-3 py-2 border rounded mt-1"
-              rows="2"
-            ></textarea>
-
-            <label className="block mb-2">
-              Identifique los pasos del proceso con valor/sin valor añadido
-            </label>
-            <textarea
-              className=" px-3 py-2 border rounded mt-1"
-              rows="2"
-            ></textarea>
-
-            <label className="block mb-2">
-              Especifique las fuentes de variación
-            </label>
-            <textarea
-              className=" px-3 py-2 border rounded mt-1"
-              rows="2"
-            ></textarea>
-
-            <label className="block mb-2">
-              Describa las pocas entradas vitales en relación con el producto
-            </label>
-            <textarea
-              className=" px-3 py-2 border rounded mt-1"
-              rows="2"
-            ></textarea>
-
-            <label className="block mb-2">Causa raíz del problema</label>
-            <textarea
-              className=" px-3 py-2 border rounded mt-1"
-              rows="2"
-            ></textarea>
-
-            <h4 className="text-lg mt-4 mb-2">Mejorar</h4>
-            <label className="block mb-2">Posibles soluciones</label>
-            <textarea
-              className=" px-3 py-2 border rounded mt-1"
-              rows="2"
-            ></textarea>
-
-            <label className="block mb-2">
-              ¿Están bien definidas las tolerancias operativas del posible
-              sistema?
-            </label>
-            <div className="flex gap-4">
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="operationalTolerances"
-                  value="Sí"
-                  className="mr-2"
-                />
-                Sí
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="operationalTolerances"
-                  value="No"
-                  className="mr-2"
-                />
-                No
-              </label>
-            </div>
-
-            <label className="block mb-2">
-              ¿Se realizaron experimentos de diseño?
-            </label>
-            <div className="flex gap-4">
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="designExperiments"
-                  value="Sí"
-                  className="mr-2"
-                />
-                Sí
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="designExperiments"
-                  value="No"
-                  className="mr-2"
-                />
-                No
-              </label>
-            </div>
-
-            <label className="block mb-2">
-              ¿Se validaron las posibles mejoras a través de estudios piloto?
-            </label>
-            <div className="flex gap-4">
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="pilotStudies"
-                  value="Sí"
-                  className="mr-2"
-                />
-                Sí
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="pilotStudies"
-                  value="No"
-                  className="mr-2"
-                />
-                No
-              </label>
-            </div>
-
-            <label className="block mb-2">
-              ¿Se evaluaron y reevaluaron las posibles soluciones?
-            </label>
-            <div className="flex gap-4">
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="solutionsEvaluation"
-                  value="Sí"
-                  className="mr-2"
-                />
-                Sí
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="solutionsEvaluation"
-                  value="No"
-                  className="mr-2"
-                />
-                No
-              </label>
-            </div>
-
-            <h4 className="text-lg mt-4 mb-2">Controlar</h4>
-            <label className="block mb-2">
-              ¿Cuál es el sistema de seguimiento y control establecido?
-            </label>
-            <textarea
-              className=" px-3 py-2 border rounded mt-1"
-              rows="2"
-            ></textarea>
-
-            <label className="block mb-2">
-              ¿Se implementó el control estadístico de los procesos?
-            </label>
-            <div className="flex gap-4">
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="statisticalControl"
-                  value="Sí"
-                  className="mr-2"
-                />
-                Sí
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="statisticalControl"
-                  value="No"
-                  className="mr-2"
-                />
-                No
-              </label>
-            </div>
-
-            <label className="block mb-2">
-              Plan de transferencia (traspaso al propietario del proceso)
-            </label>
-            <textarea
-              className=" px-3 py-2 border rounded mt-1"
-              rows="2"
-            ></textarea>
-
-            <label className="block mb-2">
-              ¿Se verificaron los beneficios, ahorros o evasión de costes y el
-              crecimiento de las ganancias?
-            </label>
-            <div className="flex gap-4">
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="benefitsVerification"
-                  value="Sí"
-                  className="mr-2"
-                />
-                Sí
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="benefitsVerification"
-                  value="No"
-                  className="mr-2"
-                />
-                No
-              </label>
-            </div>
-
-            <h4 className="text-lg mt-4 mb-2">Finalización</h4>
-            <label className="block mb-2">Recomendaciones adicionales</label>
-            <textarea
-              className=" px-3 py-2 border rounded mt-1"
-              rows="2"
-            ></textarea>
             <div className="py-8">
+              <div className="flex flex-col mb-4">
+                <input type="text" name="nombre" />
+                <input type="file" name="imagen" />
+                <select name="opcion">
+                  <option value="option1">Opción 1</option>
+                  <option value="option2">Opción 2</option>
+                </select>
+              </div>
               <button
                 type="submit"
-                className=" px-4 py-2 bg-white text-black rounded w-96  transition-colors duration-300"
+                className="px-4 py-2 text-black transition-colors duration-300 bg-white rounded w-96"
               >
                 Guardar
               </button>
             </div>
           </form>
+        )}
+        {hasClicked && (
+          <div className="fixed inset-0 z-10 overflow-y-auto text-black">
+            <div className="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+              <div
+                className="fixed inset-0 transition-opacity"
+                aria-hidden="true"
+              >
+                <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+              </div>
+              <span
+                className="hidden sm:inline-block sm:align-middle sm:h-screen"
+                aria-hidden="true"
+              >
+                &#8203;
+              </span>
+              <div className="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                {proyecto ? (
+                  <div className="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
+                    <h2 className="mb-4 text-xl font-semibold text-blue-500">
+                      Proyecto más reciente
+                    </h2>
+                    <h3>Nombre: {proyecto.nombre}</h3>
+                    <img
+                      src={`data:image/jpeg;base64,${proyecto.imagen}`}
+                      alt={proyecto.nombre}
+                    />
+                    <h4>Opción: {proyecto.opcion}</h4>
+                  </div>
+                ) : (
+                  <div className="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
+                    <p>No hay proyectos disponibles.</p>
+                  </div>
+                )}
+                <div className="px-4 py-3 bg-gray-50 sm:px-6 sm:flex sm:flex-row-reverse">
+                  <button
+                    type="button"
+                    className="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                    onClick={() => setHasClicked(false)}
+                  >
+                    Cerrar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
       </section>
     </div>
