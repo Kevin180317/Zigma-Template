@@ -5,6 +5,8 @@ const cors = require("cors");
 const mysql = require("mysql");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
+const multer = require("multer");
+const upload = multer();
 
 const app = express();
 
@@ -121,6 +123,59 @@ app.post("/logout", (req, res) => {
   } else {
     return res.status(400).send({ error: "No se encontró la sesión" });
   }
+});
+
+app.post("/upload", upload.single("imagen"), (req, res) => {
+  console.log("Archivo recibido:", req.file);
+
+  // Convertir el archivo a un Buffer para almacenarlo en MySQL.
+  const imagen = Buffer.from(req.file.buffer);
+  const nombre = req.body.nombre;
+  const opcion = req.body.opcion;
+  const userId = req.body.userId;
+  connection.query(
+    "INSERT INTO mi_tabla (nombre, imagen, opcion, userId) VALUES (?, ?, ?, ?)",
+    [nombre, imagen, opcion, userId],
+    (error, results) => {
+      if (error) {
+        console.error("Error al guardar los datos en MySQL:", error);
+        res
+          .status(500)
+          .json({ message: "Error al guardar los datos en MySQL." });
+        return;
+      }
+
+      console.log("Datos guardados en MySQL con el ID:", results.insertId);
+      res.json({ message: "Datos subidos y guardados en MySQL con éxito." });
+    }
+  );
+});
+
+app.get("/proyecto/:userId", (req, res) => {
+  const userId = req.params.userId;
+
+  connection.query(
+    "SELECT * FROM mi_tabla WHERE userId = ? ORDER BY id DESC LIMIT 1",
+    [userId],
+    (error, results) => {
+      if (error) {
+        console.error("Error al obtener el proyecto:", error);
+        res.status(500).json({ message: "Error al obtener el proyecto." });
+        return;
+      }
+
+      if (results.length > 0) {
+        // Convierte la imagen a una cadena Base64.
+        const proyecto = results[0];
+        proyecto.imagen = Buffer.from(proyecto.imagen).toString("base64");
+
+        // Devuelve el proyecto.
+        res.json(proyecto);
+      } else {
+        res.status(404).json({ message: "Proyecto no encontrado." });
+      }
+    }
+  );
 });
 
 app.listen(3000, () => {
