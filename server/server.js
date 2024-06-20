@@ -11,6 +11,8 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage }).fields([
   { name: "imagen", maxCount: 1 },
   { name: "imagen2", maxCount: 1 },
+  { name: "imagen3", maxCount: 1 },
+  { name: "imagen4", maxCount: 1 },
 ]);
 const app = express();
 
@@ -21,7 +23,8 @@ app.use(
   })
 );
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(express.json());
 
 app.use(
@@ -140,9 +143,22 @@ app.post("/upload", upload, (req, res) => {
   const objetivos = req.body.objetivos;
   const enumere = req.body.enumere;
   const imagen2 = Buffer.from(req.files.imagen2[0].buffer);
+  const imagen3 = Buffer.from(req.files.imagen3[0].buffer);
+  const opcion2 = req.body.opcion2;
   const userId = req.body.userId;
+  const planRecopilacion = req.body.planRecopilacion;
+  const rendimientoProceso = req.body.rendimientoProceso;
+  const Planteamientodelproblema = req.body.Planteamientodelproblema;
+  const objetivosanalizar = req.body.objetivosanalizar;
+  const enumereanalizar = req.body.enumereanalizar;
+  const fuentesvariacion = req.body.fuentesvariacion;
+  const entradasvitales = req.body.entradasvitales;
+  const causaproblema = req.body.causaproblema;
+  const imagen4 = Buffer.from(req.files.imagen4[0].buffer);
+  const opcion3 = req.body.opcion3;
+
   connection.query(
-    "INSERT INTO mi_tabla (nombre, imagen, opcion, ubicacion, profesional, descripcion, objetivos, enumere, imagen2, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    "INSERT INTO mi_tabla (nombre, imagen, opcion, ubicacion, profesional, descripcion, objetivos, enumere, imagen2, imagen3, opcion2, userId, planRecopilacion, rendimientoProceso, PlanteamientoProblema, objetivosanalizar, enumereanalizar, fuentesvariacion, entradasvitales, causaproblema, imagen4, opcion3) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
     [
       nombre,
       imagen,
@@ -153,7 +169,19 @@ app.post("/upload", upload, (req, res) => {
       objetivos,
       enumere,
       imagen2,
+      imagen3,
+      opcion2,
       userId,
+      planRecopilacion,
+      rendimientoProceso,
+      Planteamientodelproblema,
+      objetivosanalizar,
+      enumereanalizar,
+      fuentesvariacion,
+      entradasvitales,
+      causaproblema,
+      imagen4,
+      opcion3,
     ],
     (error, results) => {
       if (error) {
@@ -188,7 +216,8 @@ app.get("/proyecto/:userId", (req, res) => {
         const proyecto = results[0];
         proyecto.imagen = Buffer.from(proyecto.imagen).toString("base64");
         proyecto.imagen2 = Buffer.from(proyecto.imagen2).toString("base64");
-
+        proyecto.imagen3 = Buffer.from(proyecto.imagen3).toString("base64");
+        proyecto.imagen4 = Buffer.from(proyecto.imagen4).toString("base64");
         // Devuelve el proyecto.
         res.json(proyecto);
       } else {

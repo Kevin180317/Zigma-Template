@@ -10,7 +10,8 @@ function Dashboard() {
   const [showForm, setShowForm] = useState(false);
   const [hasClicked, setHasClicked] = useState(false);
   const [showPDF, setShowPDF] = useState(false);
-
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOptiondas, setSelectedOptiondas] = useState(null);
   const handleStart = () => {
     setShowForm(true);
   };
@@ -52,7 +53,21 @@ function Dashboard() {
     formData.append("objetivos", event.target.objetivos.value);
     formData.append("enumere", event.target.enumere.value);
     formData.append("imagen2", event.target.imagen2.files[0]);
-
+    formData.append("planRecopilacion", selectedOption);
+    formData.append("rendimientoProceso", selectedOptiondas);
+    formData.append(
+      "Planteamientodelproblema",
+      event.target.Planteamientoproblema.value
+    );
+    formData.append("imagen3", event.target.imagen3.files[0]);
+    formData.append("opcion2", event.target.opcion2.value);
+    formData.append("objetivosanalizar", event.target.objetivosanalizar.value);
+    formData.append("enumereanalizar", event.target.enumereanalizar.value);
+    formData.append("fuentesvariacion", event.target.fuentesvariacion.value);
+    formData.append("entradasvitales", event.target.entradasvitales.value);
+    formData.append("causaproblema", event.target.causaproblema.value);
+    formData.append("imagen4", event.target.imagen4.files[0]);
+    formData.append("opcion3", event.target.opcion3.value);
     formData.append("userId", userId);
     try {
       const response = await axios.post(
@@ -102,7 +117,7 @@ function Dashboard() {
   return (
     <div className="flex gap-4 overflow-x-hidden bg-blue-500">
       <aside
-        className={`flex flex-col justify-between w-64 ${
+        className={`flex flex-col justify-between w-96 ${
           !showForm ? "h-screen" : ""
         } bg-white text-blue-500 shadow-lg`}
       >
@@ -113,28 +128,28 @@ function Dashboard() {
         <div className="p-4">
           <button
             onClick={handleLogout}
-            className="px-4 py-2 text-white transition-colors duration-300 bg-blue-500 rounded hover:bg-blue-700 "
+            className="w-64 px-4 py-2 text-white transition-colors duration-300 bg-blue-500 rounded hover:bg-blue-700 "
           >
             Cerrar sesión
           </button>
         </div>
       </aside>
       <section className="text-white">
-        <h1 className="p-4 text-4xl">Contenido del dashboard</h1>
+        <h1 className="py-4 text-4xl">Contenido del dashboard</h1>
         <hr className="w-screen mb-8" />
         {!showForm ? (
           <div className="p-6 bg-white rounded-lg shadow-lg w-96">
-            <h2 className="mb-4 text-xl font-semibold text-blue-500">
+            <h2 className="mb-4 text-2xl font-semibold text-center text-blue-500">
               Crear nuevo proyecto
             </h2>
             <button
               onClick={handleStart}
-              className="px-4 py-2 mt-4 text-white transition-colors duration-300 bg-blue-500 rounded hover:bg-blue-700"
+              className="px-4 py-2 mt-4 text-white transition-colors duration-300 bg-blue-500 rounded w-80 hover:bg-blue-700"
             >
               Comenzar
             </button>
             <button
-              className="px-4 py-2 mt-4 text-white transition-colors duration-300 bg-blue-500 rounded hover:bg-blue-700"
+              className="px-4 py-2 mt-4 text-white transition-colors duration-300 bg-blue-500 rounded w-80 hover:bg-blue-700"
               onClick={obtenerProyectoMasReciente}
             >
               Obtener proyecto más reciente
@@ -145,19 +160,19 @@ function Dashboard() {
             onSubmit={handleSubmit}
             className="text-black [&>label]:text-white [&>h4]:text-white [&>h3]:text-white [&>input]:text-white "
           >
-            <div className="py-8">
+            <div className="px-4">
               <div className="flex flex-col mb-4 [&>label]:text-white [&>h1]:text-white">
                 <label htmlFor="nombre">Nombre del proyecto:</label>
                 <input
                   type="text"
                   name="nombre"
-                  className="w-64 h-10 border border-gray-300 rounded mb-2"
+                  className="w-64 h-10 mb-2 border border-gray-300 rounded"
                 />
                 <label htmlFor="ubicacion">Ubicacion</label>
                 <input
                   type="text"
                   name="ubicacion"
-                  className="w-64 h-10 border border-gray-300 rounded mb-2"
+                  className="w-64 h-10 mb-2 border border-gray-300 rounded"
                 />
                 <label htmlFor="profesional">
                   Profesional del metodo DMAIC
@@ -165,25 +180,26 @@ function Dashboard() {
                 <input
                   type="text"
                   name="profesional"
-                  className="w-64 h-10 border border-gray-300 rounded mb-2"
+                  className="w-64 h-10 mb-2 border border-gray-300 rounded"
                 />
                 <label htmlFor="descripcion">Realizada el</label>
                 <input
                   type="date"
                   name="descripcion"
-                  className="w-64 h-10 border border-gray-300 rounded mb-2"
+                  className="w-64 h-10 mb-2 border border-gray-300 rounded"
                 />
                 <label htmlFor="imagen">Imagen del proyecto:</label>
                 <input type="file" accept=".jpeg, .jpg" name="imagen" />
 
-                <h1 className="text-2xl fontbold py-4">Definir</h1>
+                <h1 className="mt-4 mb-4 text-4xl font-bold">Ciclo DMAIC</h1>
+                <h1 className="py-4 text-2xl fontbold">Definir</h1>
                 <label htmlFor="objetivos">
                   Cuales son los objetivos del proyecto?
                 </label>
                 <input
                   type="text"
                   name="objetivos"
-                  className="w-64 h-10 border border-gray-300 rounded mb-2"
+                  className="w-64 h-10 mb-2 border border-gray-300 rounded"
                 />
                 <label htmlFor="enumere">
                   Enumere los productos finales para los clientes (internos y
@@ -192,7 +208,7 @@ function Dashboard() {
                 <input
                   type="text"
                   name="enumere"
-                  className="w-64 h-10 border border-gray-300 rounded mb-2"
+                  className="w-64 h-10 mb-2 border border-gray-300 rounded"
                 />
                 <label htmlFor="imagen2">Imagen de Definir</label>
                 <input type="file" accept=".jpeg, .jpg" name="imagen2" />
@@ -218,10 +234,192 @@ function Dashboard() {
                     Mapa de procesos (SIPOC)
                   </option>
                 </select>
+                <h1 className="mt-4 mb-4 text-2xl font-bold">Medida</h1>
+                <label htmlFor="" className="mb-4">
+                  ¿Se ha desarrollado un plan de recopilación de datos para
+                  cuantificar el problema?
+                </label>
+                <div className="flex items-center mb-4">
+                  <input
+                    type="radio"
+                    id="si"
+                    name="planRecopilacion"
+                    value="si"
+                    className="hidden"
+                    onChange={() => setSelectedOption("si")}
+                  />
+                  <label
+                    htmlFor="si"
+                    className={`w-64 px-4 py-2 mr-2 text-center transition-colors duration-300 rounded cursor-pointer ${
+                      selectedOption === "si"
+                        ? "text-black bg-gray-200"
+                        : "text-black bg-white"
+                    } hover:bg-gray-200`}
+                  >
+                    Si
+                  </label>
+                  <input
+                    type="radio"
+                    id="no"
+                    name="planRecopilacion"
+                    value="no"
+                    className="hidden"
+                    onChange={() => setSelectedOption("no")}
+                  />
+                  <label
+                    htmlFor="no"
+                    className={`w-64 px-4 py-2 mr-2 text-center transition-colors duration-300 rounded cursor-pointer ${
+                      selectedOption === "no"
+                        ? "text-black bg-gray-200"
+                        : "text-black bg-white"
+                    } hover:bg-gray-200`}
+                  >
+                    No
+                  </label>
+                </div>
+                <label htmlFor="">
+                  ¿Se determina el rendimiento actual del proceso a través de la
+                  evaluación comparativa?
+                </label>
+                <div className="flex items-center mb-4">
+                  <input
+                    type="radio"
+                    id="si2"
+                    name="rendimientoProceso"
+                    value="si"
+                    className="hidden"
+                    onChange={() => setSelectedOptiondas("si")}
+                  />
+                  <label
+                    htmlFor="si2"
+                    className={`w-64 px-4 py-2 mr-2 text-center transition-colors duration-300 rounded cursor-pointer ${
+                      selectedOptiondas === "si"
+                        ? "text-black bg-gray-200"
+                        : "text-black bg-white"
+                    } hover:bg-gray-200`}
+                  >
+                    Si
+                  </label>
+                  <input
+                    type="radio"
+                    id="no2"
+                    name="rendimientoProceso"
+                    value="no"
+                    className="hidden"
+                    onChange={() => setSelectedOptiondas("no")}
+                  />
+                  <label
+                    htmlFor="no2"
+                    className={`w-64 px-4 py-2 mr-2 text-center transition-colors duration-300 rounded cursor-pointer ${
+                      selectedOptiondas === "no"
+                        ? "text-black bg-gray-200"
+                        : "text-black bg-white"
+                    } hover:bg-gray-200`}
+                  >
+                    {" "}
+                    No{" "}
+                  </label>
+                </div>
+                <label htmlFor="Planteamientoproblema">
+                  Planteamiento del problema
+                </label>
+                <input
+                  type="text"
+                  name="Planteamientoproblema"
+                  className="w-64 h-10 mb-2 text-black border border-gray-300 rounded"
+                />
+                <label htmlFor="imagen3">Imagen de Medida</label>
+                <input type="file" accept=".jpeg, .jpg" name="imagen3" />
+                <label htmlFor="descripcion">
+                  Descripcion de la imagen de Medida
+                </label>
+                <select name="opcion2" className="w-64 py-2">
+                  <option value="Plan de recoleccion de datos">
+                    Plan de recoleccion de datos
+                  </option>
+                  <option value="Estudios R & R ">Estudios R & R</option>
+                  <option value="Estadistica Basica">Estadistica Basica</option>
+                  <option value="Capacidad de proceso">
+                    Capacidad de proceso
+                  </option>
+                  <option value="Calculos de Nivel Sigma (Z)">
+                    Calculos de Nivel Sigma (Z)
+                  </option>
+                  <option value="Analisis graficos">Analisis graficos</option>
+                  <option value="Diagramas de Pareto">
+                    Diagramas de Pareto
+                  </option>
+                  <option value="Graficos de control">
+                    Graficos de control
+                  </option>
+                </select>
+                <h1>Analizar</h1>
+                <label htmlFor="¿Cuáles son los objetivos del rendimiento?">
+                  ¿Cuáles son los objetivos del rendimiento?
+                </label>
+                <input
+                  type="text"
+                  name="objetivosanalizar"
+                  className="w-64 h-10 mb-2 border border-gray-300 rounded"
+                />
+                <label htmlFor="Identifique los pasos del proceso con valor/sin valor añadido">
+                  Identifique los pasos del proceso con valor/sin valor añadido
+                </label>
+                <input
+                  type="text"
+                  name="enumereanalizar"
+                  className="w-64 h-10 mb-2 border border-gray-300 rounded"
+                />
+                <label htmlFor="Especifique las fuentes de variación">
+                  Especifique las fuentes de variación
+                </label>
+
+                <input
+                  type="text"
+                  name="fuentesvariacion"
+                  className="w-64 h-10 mb-2 border border-gray-300 rounded"
+                />
+                <label htmlFor="Describa las pocas entradas vitales en relación con el producto">
+                  Describa las pocas entradas vitales en relación con el
+                  producto
+                </label>
+                <input
+                  type="text"
+                  name="entradasvitales"
+                  className="w-64 h-10 mb-2 border border-gray-300 rounded"
+                />
+                <label htmlFor="Causa raíz del problema">
+                  Causa raíz del problema
+                </label>
+                <input
+                  type="text"
+                  name="causaproblema"
+                  className="w-64 h-10 mb-2 border border-gray-300 rounded"
+                />
+                <input type="file" accept=".jpeg, .jpg" name="imagen4" />
+                <select name="opcion3" className="w-64 py-2">
+                  <option value="Prueba de hipotesis">
+                    Prueba de hipotesis
+                  </option>
+                  <option value="Analisis grafico">Analisis grafico</option>
+                  <option value="Pruebas T">Pruebas T</option>
+                  <option value="ANOVA (Analisis de varianza)">
+                    ANOVA (Analisis de varianza)
+                  </option>
+                  <option value="Diagramas de dispersion">
+                    Diagramas de dispersion
+                  </option>
+                  <option value="Analisis de regresion">
+                    Analisis de regresion
+                  </option>
+                  <option value="Diseño de experimentos (DOE)">
+                    Diseño de experimentos (DOE)
+                  </option>
+                </select>
               </div>
               <button
                 type="submit"
-                className="px-4 py-2 text-black transition-colors duration-300 bg-white rounded w-96"
+                className="w-64 px-4 py-2 mb-8 text-black transition-colors duration-300 bg-white rounded"
               >
                 Guardar
               </button>
@@ -264,6 +462,14 @@ function Dashboard() {
                       alt="Imagen 2"
                     />
                     <h4>Opción: {proyecto.opcion}</h4>
+                    <img
+                      src={`data:image/jpeg;base64,${proyecto.imagen3}`}
+                      alt="Imagen 2"
+                    />
+                    <img
+                      src={`data:image/jpeg;base64,${proyecto.imagen4}`}
+                      alt="Imagen 2"
+                    />
                   </div>
                 ) : (
                   <div className="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
