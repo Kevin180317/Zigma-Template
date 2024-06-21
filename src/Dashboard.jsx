@@ -68,6 +68,26 @@ function Dashboard() {
     formData.append("causaproblema", event.target.causaproblema.value);
     formData.append("imagen4", event.target.imagen4.files[0]);
     formData.append("opcion3", event.target.opcion3.value);
+    formData.append(
+      "posiblesSoluciones",
+      event.target.posiblesSoluciones.value
+    );
+    formData.append(
+      "toleranciasOperativas",
+      event.target.toleranciasOperativas.value
+    );
+    formData.append(
+      "experimentosDiseno",
+      event.target.experimentosDiseno.value
+    );
+    formData.append("estudiosPiloto", event.target.estudiosPiloto.value);
+    formData.append(
+      "evaluacionSoluciones",
+      event.target.evaluacionSoluciones.value
+    );
+
+    formData.append("imagen5", event.target.imagen5.files[0]);
+    formData.append("opcion4", event.target.opcion4.value);
     formData.append("userId", userId);
     try {
       const response = await axios.post(
@@ -414,6 +434,104 @@ function Dashboard() {
                   </option>
                   <option value="Diseño de experimentos (DOE)">
                     Diseño de experimentos (DOE)
+                  </option>
+                </select>
+
+                <h1>Mejorar</h1>
+
+                <label htmlFor="posiblesSoluciones">Posibles soluciones:</label>
+                <input
+                  type="text"
+                  id="posiblesSoluciones"
+                  name="posiblesSoluciones"
+                />
+
+                <label htmlFor="toleranciasOperativas">
+                  ¿Están bien definidas las tolerancias operativas del posible
+                  sistema?
+                </label>
+                <input
+                  type="radio"
+                  id="toleranciasOperativasSi"
+                  name="toleranciasOperativas"
+                  value="Sí"
+                />
+                <label htmlFor="toleranciasOperativasSi">Sí</label>
+                <input
+                  type="radio"
+                  id="toleranciasOperativasNo"
+                  name="toleranciasOperativas"
+                  value="No"
+                />
+                <label htmlFor="toleranciasOperativasNo">No</label>
+
+                <label htmlFor="experimentosDiseno">
+                  ¿Se realizaron experimentos de diseño?
+                </label>
+                <input
+                  type="radio"
+                  id="experimentosDisenoSi"
+                  name="experimentosDiseno"
+                  value="Sí"
+                />
+                <label htmlFor="experimentosDisenoSi">Sí</label>
+                <input
+                  type="radio"
+                  id="experimentosDisenoNo"
+                  name="experimentosDiseno"
+                  value="No"
+                />
+                <label htmlFor="experimentosDisenoNo">No</label>
+
+                <label htmlFor="estudiosPiloto">
+                  ¿Se validaron las posibles mejoras a través de estudios
+                  piloto?
+                </label>
+                <input
+                  type="radio"
+                  id="estudiosPilotoSi"
+                  name="estudiosPiloto"
+                  value="Sí"
+                />
+                <label htmlFor="estudiosPilotoSi">Sí</label>
+                <input
+                  type="radio"
+                  id="estudiosPilotoNo"
+                  name="estudiosPiloto"
+                  value="No"
+                />
+                <label htmlFor="estudiosPilotoNo">No</label>
+
+                <label htmlFor="evaluacionSoluciones">
+                  ¿Se evaluaron y reevaluaron las posibles soluciones?
+                </label>
+                <input
+                  type="radio"
+                  id="evaluacionSolucionesSi"
+                  name="evaluacionSoluciones"
+                  value="Sí"
+                />
+                <label htmlFor="evaluacionSolucionesSi">Sí</label>
+                <input
+                  type="radio"
+                  id="evaluacionSolucionesNo"
+                  name="evaluacionSoluciones"
+                  value="No"
+                />
+                <label htmlFor="evaluacionSolucionesNo">No</label>
+                <input type="file" accept=".jpeg, .jpg" name="imagen5" />
+                <select name="opcion4" className="w-64 py-2">
+                  <option value="DOE">DOE</option>
+                  <option value="Seleccion de soluciones">
+                    Seleccion de soluciones
+                  </option>
+                  <option value="Planes piloto">Planes piloto</option>
+                  <option value="Metodos Lean">Metodos Lean</option>
+                  <option value="FMEA (Analisis de modo y efectos de falla)">
+                    FMEA (Analisis de modo y efectos de falla)
+                  </option>
+                  <option value="Analisis costo - beneficio">
+                    Analisis costo - beneficio
                   </option>
                 </select>
               </div>
