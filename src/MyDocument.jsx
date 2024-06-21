@@ -97,55 +97,57 @@ const MyDocument = ({ proyecto }) => (
             paddingBottom: 24,
           }}
         >
-          Definir ……………………………………
+          Definir
         </Text>
         <Text
           style={{
             paddingBottom: 24,
           }}
         >
-          Medida …………………………………..
+          Medida
         </Text>
         <Text
           style={{
             paddingBottom: 24,
           }}
         >
-          Analizar …………………………………..
+          Analizar
         </Text>
         <Text
           style={{
             paddingBottom: 24,
           }}
         >
-          Mejorar …………………………………..
+          Mejorar
         </Text>
         <Text
           style={{
             paddingBottom: 24,
           }}
         >
-          Controlar …………………………………..
+          Controlar
         </Text>
         <Text
           style={{
             paddingBottom: 24,
           }}
         >
-          Recomendaciones ………………………
+          Recomendaciones
         </Text>
         <Text
           style={{
             paddingBottom: 24,
           }}
         >
-          Anexos …………………………………
+          Anexos
         </Text>
       </View>
     </Page>
     <Page size="A4" style={styles.page}>
       <View style={styles.sectionpage2}>
-        <Text>Definir (ver anexo 1)</Text>
+        <Text style={{ fontSize: 24, fontWeight: "bold", textAlign: "center" }}>
+          Definir (ver anexo 1)
+        </Text>{" "}
         <Text
           style={{
             fontWeight: "bold",
