@@ -14,6 +14,7 @@ const upload = multer({ storage: storage }).fields([
   { name: "imagen3", maxCount: 1 },
   { name: "imagen4", maxCount: 1 },
   { name: "imagen5", maxCount: 1 },
+  { name: "imagen6", maxCount: 1 },
 ]);
 const app = express();
 
@@ -164,9 +165,15 @@ app.post("/upload", upload, (req, res) => {
   const experimentosDiseno = req.body.experimentosDiseno;
   const estudiosPiloto = req.body.estudiosPiloto;
   const evaluacionSoluciones = req.body.evaluacionSoluciones;
-
+  const imagen6 = Buffer.from(req.files.imagen6[0].buffer);
+  const opcion5 = req.body.opcion5;
+  const sistemaSeguimiento = req.body.sistemaSeguimiento;
+  const controlEstadistico = req.body.controlEstadistico;
+  const planTransferencia = req.body.planTransferencia;
+  const verificacionBeneficios = req.body.verificacionBeneficios;
+  const recomendaciones = req.body.recomendaciones;
   connection.query(
-    "INSERT INTO mi_tabla (nombre, imagen, opcion, ubicacion, profesional, descripcion, objetivos, enumere, imagen2, imagen3, opcion2, userId, planRecopilacion, rendimientoProceso, PlanteamientoProblema, objetivosanalizar, enumereanalizar, fuentesvariacion, entradasvitales, causaproblema, imagen4, opcion3, imagen5, opcion4, posiblesSoluciones, toleranciasOperativas, experimentosDiseno, estudiosPiloto, evaluacionSoluciones) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    "INSERT INTO mi_tabla (nombre, imagen, opcion, ubicacion, profesional, descripcion, objetivos, enumere, imagen2, imagen3, opcion2, userId, planRecopilacion, rendimientoProceso, PlanteamientoProblema, objetivosanalizar, enumereanalizar, fuentesvariacion, entradasvitales, causaproblema, imagen4, opcion3, imagen5, opcion4, posiblesSoluciones, toleranciasOperativas, experimentosDiseno, estudiosPiloto, evaluacionSoluciones, sistemaSeguimiento, controlEstadistico, planTransferencia, verificacionBeneficios, imagen6, opcion5, recomendaciones) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
     [
       nombre,
       imagen,
@@ -197,6 +204,13 @@ app.post("/upload", upload, (req, res) => {
       experimentosDiseno,
       estudiosPiloto,
       evaluacionSoluciones,
+      sistemaSeguimiento,
+      controlEstadistico,
+      planTransferencia,
+      verificacionBeneficios,
+      imagen6,
+      opcion5,
+      recomendaciones,
     ],
     (error, results) => {
       if (error) {
@@ -234,6 +248,7 @@ app.get("/proyecto/:userId", (req, res) => {
         proyecto.imagen3 = Buffer.from(proyecto.imagen3).toString("base64");
         proyecto.imagen4 = Buffer.from(proyecto.imagen4).toString("base64");
         proyecto.imagen5 = Buffer.from(proyecto.imagen5).toString("base64");
+        proyecto.imagen6 = Buffer.from(proyecto.imagen6).toString("base64");
         // Devuelve el proyecto.
         res.json(proyecto);
       } else {
