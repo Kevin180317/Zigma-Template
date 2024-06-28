@@ -172,8 +172,13 @@ app.post("/upload", upload, (req, res) => {
   const planTransferencia = req.body.planTransferencia;
   const verificacionBeneficios = req.body.verificacionBeneficios;
   const recomendaciones = req.body.recomendaciones;
+  const definircompletado = req.body.definircompletado;
+  const medidacompletado = req.body.medidacompletado;
+  const analizarcompletado = req.body.analizarcompletado;
+  const mejorarcompletado = req.body.mejorarcompletado;
+  const controlarcompletado = req.body.controlarcompletado;
   connection.query(
-    "INSERT INTO mi_tabla (nombre, imagen, opcion, ubicacion, profesional, descripcion, objetivos, enumere, imagen2, imagen3, opcion2, userId, planRecopilacion, rendimientoProceso, PlanteamientoProblema, objetivosanalizar, enumereanalizar, fuentesvariacion, entradasvitales, causaproblema, imagen4, opcion3, imagen5, opcion4, posiblesSoluciones, toleranciasOperativas, experimentosDiseno, estudiosPiloto, evaluacionSoluciones, sistemaSeguimiento, controlEstadistico, planTransferencia, verificacionBeneficios, imagen6, opcion5, recomendaciones) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    "INSERT INTO mi_tabla (nombre, imagen, opcion, ubicacion, profesional, descripcion, objetivos, enumere, imagen2, imagen3, opcion2, userId, planRecopilacion, rendimientoProceso, PlanteamientoProblema, objetivosanalizar, enumereanalizar, fuentesvariacion, entradasvitales, causaproblema, imagen4, opcion3, imagen5, opcion4, posiblesSoluciones, toleranciasOperativas, experimentosDiseno, estudiosPiloto, evaluacionSoluciones, sistemaSeguimiento, controlEstadistico, planTransferencia, verificacionBeneficios, imagen6, opcion5, recomendaciones, definircompletado, medidacompletado, analizarcompletado, mejorarcompletado, controlarcompletado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,? )",
     [
       nombre,
       imagen,
@@ -211,6 +216,11 @@ app.post("/upload", upload, (req, res) => {
       imagen6,
       opcion5,
       recomendaciones,
+      definircompletado,
+      medidacompletado,
+      analizarcompletado,
+      mejorarcompletado,
+      controlarcompletado,
     ],
     (error, results) => {
       if (error) {
