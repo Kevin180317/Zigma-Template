@@ -11,14 +11,6 @@ function Dashboard() {
   const [showForm, setShowForm] = useState(false);
   const [hasClicked, setHasClicked] = useState(false);
   const [showPDF, setShowPDF] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [selectedOptiondas, setSelectedOptiondas] = useState(null);
-  const [selectedOptiondas2, setSelectedOptiondas2] = useState(null);
-  const [selectedOptiondas3, setSelectedOptiondas3] = useState(null);
-  const [selectedOptiondas4, setSelectedOptiondas4] = useState(null);
-  const [selectedOptiondas5, setSelectedOptiondas5] = useState(null);
-  const [selectedOptiondas6, setSelectedOptiondas6] = useState(null);
-  const [selectedOptiondas7, setSelectedOptiondas7] = useState(null);
 
   const cancelForm = () => {
     setShowForm(false);
@@ -662,6 +654,26 @@ function Dashboard() {
                   </div>
                 )}
                 <div className="px-4 py-3 bg-gray-50 sm:px-6 sm:flex sm:flex-row-reverse">
+                  {proyecto?.definircompletado === "Si" &&
+                  proyecto?.medidacompletado === "Si" &&
+                  proyecto?.analizarcompletado === "Si" &&
+                  proyecto?.mejorarcompletado === "Si" &&
+                  proyecto?.controlarcompletado === "Si" ? (
+                    <button
+                      type="button"
+                      className="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-white bg-green-600 border border-transparent rounded-md shadow-sm hover:bg-green-700 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                      onClick={() => {
+                        const link = document.createElement("a");
+                        link.href = "/Plantilla.pdf";
+                        link.download = "Plantilla.pdf";
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                      }}
+                    >
+                      Descargar PDF
+                    </button>
+                  ) : null}
                   <button
                     type="button"
                     className="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"

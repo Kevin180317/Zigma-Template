@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
 
 function seleccionarImagenAleatoriaDefinir() {
   const indiceAleatorio = Math.floor(Math.random() * imagenesDefinir.length);
-  return imagenesDefinirCompletado[indiceAleatorio];
+  return imagenesDefinir[indiceAleatorio];
 }
 
 function seleccionarImagenAleatoriaMedida() {
