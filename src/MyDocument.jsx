@@ -8,15 +8,15 @@ import {
   Image,
 } from "@react-pdf/renderer";
 
-import imagen1 from "/1.jpg";
-import imagen2 from "/2.jpg";
-import imagen3 from "/3.jpg";
+// import imagen1 from "/1.jpg";
+// import imagen2 from "/2.jpg";
+// import imagen3 from "/3.jpg";
 
-const imagenesDefinir = [imagen1, imagen2, imagen3];
-const imagenesMedida = [imagen1, imagen2, imagen3];
-const imagenesAnalizar = [imagen1, imagen2, imagen3];
-const imagenesMejorar = [imagen1, imagen2, imagen3];
-const imagenesControlar = [imagen1, imagen2, imagen3];
+// const imagenesDefinir = [imagen1, imagen2, imagen3];
+// const imagenesMedida = [imagen1, imagen2, imagen3];
+// const imagenesAnalizar = [imagen1, imagen2, imagen3];
+// const imagenesMejorar = [imagen1, imagen2, imagen3];
+// const imagenesControlar = [imagen1, imagen2, imagen3];
 
 // Crear estilos
 const styles = StyleSheet.create({
@@ -44,30 +44,30 @@ const styles = StyleSheet.create({
   },
 });
 
-function seleccionarImagenAleatoriaDefinir() {
-  const indiceAleatorio = Math.floor(Math.random() * imagenesDefinir.length);
-  return imagenesDefinir[indiceAleatorio];
-}
+// function seleccionarImagenAleatoriaDefinir() {
+//   const indiceAleatorio = Math.floor(Math.random() * imagenesDefinir.length);
+//   return imagenesDefinir[indiceAleatorio];
+// }
 
-function seleccionarImagenAleatoriaMedida() {
-  const indiceAleatorio = Math.floor(Math.random() * imagenesMedida.length);
-  return imagenesMedida[indiceAleatorio];
-}
+// function seleccionarImagenAleatoriaMedida() {
+//   const indiceAleatorio = Math.floor(Math.random() * imagenesMedida.length);
+//   return imagenesMedida[indiceAleatorio];
+// }
 
-function seleccionarImagenAleatoriaAnalizar() {
-  const indiceAleatorio = Math.floor(Math.random() * imagenesAnalizar.length);
-  return imagenesAnalizar[indiceAleatorio];
-}
+// function seleccionarImagenAleatoriaAnalizar() {
+//   const indiceAleatorio = Math.floor(Math.random() * imagenesAnalizar.length);
+//   return imagenesAnalizar[indiceAleatorio];
+// }
 
-function seleccionarImagenAleatoriaMejorar() {
-  const indiceAleatorio = Math.floor(Math.random() * imagenesMejorar.length);
-  return imagenesMejorar[indiceAleatorio];
-}
+// function seleccionarImagenAleatoriaMejorar() {
+//   const indiceAleatorio = Math.floor(Math.random() * imagenesMejorar.length);
+//   return imagenesMejorar[indiceAleatorio];
+// }
 
-function seleccionarImagenAleatoriaControlar() {
-  const indiceAleatorio = Math.floor(Math.random() * imagenesControlar.length);
-  return imagenesControlar[indiceAleatorio];
-}
+// function seleccionarImagenAleatoriaControlar() {
+//   const indiceAleatorio = Math.floor(Math.random() * imagenesControlar.length);
+//   return imagenesControlar[indiceAleatorio];
+// }
 
 // Crear documento
 const MyDocument = ({ proyecto }) => (
@@ -207,12 +207,12 @@ const MyDocument = ({ proyecto }) => (
           Productos finales para los clientes (internos y externos)
         </Text>
         <Text>{proyecto.enumere}</Text>
-        {proyecto.definircompletado === "Si" && (
+        {/* {proyecto.definircompletado === "Si" && (
           <Image
             style={styles.image}
             src={seleccionarImagenAleatoriaDefinir()}
           />
-        )}{" "}
+        )}{" "} */}
       </View>
     </Page>
     <Page size="A4" style={styles.page}>
@@ -256,12 +256,12 @@ const MyDocument = ({ proyecto }) => (
           Planteamiento del problema
         </Text>
         <Text>{proyecto.planteamientoProblema}</Text>
-        {proyecto.medidacompletado === "Si" && (
+        {/* {proyecto.medidacompletado === "Si" && (
           <Image
             style={styles.image}
             src={seleccionarImagenAleatoriaMedida()}
           />
-        )}
+        )} */}
       </View>
     </Page>
     <Page size="A4" style={styles.page}>
@@ -329,12 +329,12 @@ const MyDocument = ({ proyecto }) => (
           Causa raíz del problema
         </Text>
         <Text>{proyecto.causaproblema}</Text>
-        {proyecto.analizarcompletado === "Si" && (
+        {/* {proyecto.analizarcompletado === "Si" && (
           <Image
             style={styles.image}
             src={seleccionarImagenAleatoriaAnalizar()}
           />
-        )}
+        )} */}
       </View>
     </Page>
     <Page size="A4" style={styles.page}>
@@ -402,12 +402,12 @@ const MyDocument = ({ proyecto }) => (
         >
           Evaluaron y reevaluaron las posibles soluciones
         </Text>
-        {proyecto.mejorarcompletado === "Si" && (
+        {/* {proyecto.mejorarcompletado === "Si" && (
           <Image
             style={styles.image}
             src={seleccionarImagenAleatoriaMejorar()}
           />
-        )}
+        )} */}
       </View>
     </Page>
     <Page size="A4" style={styles.page}>
@@ -462,12 +462,12 @@ const MyDocument = ({ proyecto }) => (
         >
           Costes y el crecimiento de las ganancias
         </Text>
-        {proyecto.controlarcompletado === "Si" && (
+        {/* {proyecto.controlarcompletado === "Si" && (
           <Image
             style={styles.image}
             src={seleccionarImagenAleatoriaControlar()}
           />
-        )}
+        )} */}
       </View>
     </Page>
     <Page size="A4" style={styles.page}>

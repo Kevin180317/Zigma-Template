@@ -665,7 +665,6 @@ function Dashboard() {
                       onClick={() => {
                         const link = document.createElement("a");
                         link.href = "/Plantilla.pdf";
-                        link.download = "Plantilla.pdf";
                         document.body.appendChild(link);
                         link.click();
                         document.body.removeChild(link);
@@ -678,11 +677,11 @@ function Dashboard() {
                     type="button"
                     className="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={() => {
-                      setHasClicked(false); // Cierra el modal del proyecto
-                      setShowPDF(true); // Abre el modal del PDF
+                      setHasClicked(false);
+                      setShowPDF(true);
                     }}
                   >
-                    Ver PDF
+                    Ver información
                   </button>
                   <button
                     type="button"
