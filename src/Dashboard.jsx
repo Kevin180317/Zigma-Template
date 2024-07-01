@@ -20,7 +20,7 @@ function Dashboard() {
   };
   useEffect(() => {
     axios
-      .get("http://localhost:3000/dashboard", { withCredentials: true })
+      .get("https://rohisel.com/dashboard", { withCredentials: true })
       .then((response) => {
         if (response.data.userId) {
           setUserId(response.data.userId);
@@ -33,7 +33,7 @@ function Dashboard() {
 
   const handleLogout = () => {
     axios
-      .post("http://localhost:3000/logout", null, { withCredentials: true })
+      .post("https://rohisel.com/logout", null, { withCredentials: true })
       .then(() => {
         setUserId(null);
         navigate("/");
@@ -81,9 +81,7 @@ function Dashboard() {
       "sistemaSeguimiento",
       event.target.sistemaSeguimiento.value
     );
-
     formData.append("planTransferencia", event.target.planTransferencia.value);
-
     formData.append("imagen6", event.target.imagen6.files[0]);
     formData.append("opcion5", event.target.opcion5.value);
     formData.append("recomendaciones", event.target.recomendaciones.value);
@@ -101,7 +99,7 @@ function Dashboard() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/upload",
+        "https://rohisel.com/upload",
         formData,
         setShowForm(false),
         toast.success("Proyecto creado con éxito"),
@@ -125,7 +123,7 @@ function Dashboard() {
   const obtenerProyectoMasReciente = async () => {
     setHasClicked(true);
     try {
-      const res = await axios.get("http://localhost:3000/proyecto/" + userId);
+      const res = await axios.get("https://rohisel.com/proyecto/" + userId);
       setProyecto(res.data);
       console.log("Proyecto más reciente:", res.data);
     } catch (error) {
@@ -233,9 +231,7 @@ function Dashboard() {
                   className="mb-2 border border-gray-300 rounded w-96"
                 />
                 <label htmlFor="descripcion">Realizada el</label>
-                <textarea
-                  cols={30}
-                  rows={3}
+                <input
                   type="date"
                   name="descripcion"
                   className="mb-2 border border-gray-300 rounded w-96"
@@ -665,6 +661,7 @@ function Dashboard() {
                       onClick={() => {
                         const link = document.createElement("a");
                         link.href = "/Plantilla.pdf";
+                        link.target = "_blank";
                         document.body.appendChild(link);
                         link.click();
                         document.body.removeChild(link);

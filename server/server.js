@@ -148,8 +148,6 @@ app.post("/upload", upload, (req, res) => {
   const imagen3 = Buffer.from(req.files.imagen3[0].buffer);
   const opcion2 = req.body.opcion2;
   const userId = req.body.userId;
-  const planRecopilacion = req.body.planRecopilacion;
-  const rendimientoProceso = req.body.rendimientoProceso;
   const Planteamientodelproblema = req.body.Planteamientodelproblema;
   const objetivosanalizar = req.body.objetivosanalizar;
   const enumereanalizar = req.body.enumereanalizar;
@@ -161,16 +159,10 @@ app.post("/upload", upload, (req, res) => {
   const imagen5 = Buffer.from(req.files.imagen5[0].buffer);
   const opcion4 = req.body.opcion4;
   const posiblesSoluciones = req.body.posiblesSoluciones;
-  const toleranciasOperativas = req.body.toleranciasOperativas;
-  const experimentosDiseno = req.body.experimentosDiseno;
-  const estudiosPiloto = req.body.estudiosPiloto;
-  const evaluacionSoluciones = req.body.evaluacionSoluciones;
   const imagen6 = Buffer.from(req.files.imagen6[0].buffer);
   const opcion5 = req.body.opcion5;
   const sistemaSeguimiento = req.body.sistemaSeguimiento;
-  const controlEstadistico = req.body.controlEstadistico;
   const planTransferencia = req.body.planTransferencia;
-  const verificacionBeneficios = req.body.verificacionBeneficios;
   const recomendaciones = req.body.recomendaciones;
   const definircompletado = req.body.definircompletado;
   const medidacompletado = req.body.medidacompletado;
@@ -178,7 +170,7 @@ app.post("/upload", upload, (req, res) => {
   const mejorarcompletado = req.body.mejorarcompletado;
   const controlarcompletado = req.body.controlarcompletado;
   connection.query(
-    "INSERT INTO mi_tabla (nombre, imagen, opcion, ubicacion, profesional, descripcion, objetivos, enumere, imagen2, imagen3, opcion2, userId, planRecopilacion, rendimientoProceso, PlanteamientoProblema, objetivosanalizar, enumereanalizar, fuentesvariacion, entradasvitales, causaproblema, imagen4, opcion3, imagen5, opcion4, posiblesSoluciones, toleranciasOperativas, experimentosDiseno, estudiosPiloto, evaluacionSoluciones, sistemaSeguimiento, controlEstadistico, planTransferencia, verificacionBeneficios, imagen6, opcion5, recomendaciones, definircompletado, medidacompletado, analizarcompletado, mejorarcompletado, controlarcompletado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? ,? )",
+    "INSERT INTO mi_tabla (nombre, imagen, opcion, ubicacion, profesional, descripcion, objetivos, enumere, imagen2, imagen3, opcion2, userId, PlanteamientoProblema, objetivosanalizar, enumereanalizar, fuentesvariacion, entradasvitales, causaproblema, imagen4, opcion3, imagen5, opcion4, posiblesSoluciones, sistemaSeguimiento,  planTransferencia, imagen6, opcion5, recomendaciones, definircompletado, medidacompletado, analizarcompletado, mejorarcompletado, controlarcompletado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )",
     [
       nombre,
       imagen,
@@ -192,8 +184,6 @@ app.post("/upload", upload, (req, res) => {
       imagen3,
       opcion2,
       userId,
-      planRecopilacion,
-      rendimientoProceso,
       Planteamientodelproblema,
       objetivosanalizar,
       enumereanalizar,
@@ -205,14 +195,8 @@ app.post("/upload", upload, (req, res) => {
       imagen5,
       opcion4,
       posiblesSoluciones,
-      toleranciasOperativas,
-      experimentosDiseno,
-      estudiosPiloto,
-      evaluacionSoluciones,
       sistemaSeguimiento,
-      controlEstadistico,
       planTransferencia,
-      verificacionBeneficios,
       imagen6,
       opcion5,
       recomendaciones,

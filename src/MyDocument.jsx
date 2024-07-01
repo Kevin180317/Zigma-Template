@@ -220,7 +220,7 @@ const MyDocument = ({ proyecto }) => (
         <Text style={{ fontSize: 24, fontWeight: "bold", textAlign: "center" }}>
           Medida (ver anexo 2){" "}
         </Text>
-        <Text
+        {/* <Text
           style={{
             fontWeight: "bold",
             color: "blue",
@@ -231,8 +231,8 @@ const MyDocument = ({ proyecto }) => (
         >
           {" "}
           Plan de recopilación de datos
-        </Text>
-        <Text
+        </Text> */}
+        {/* <Text
           style={{
             fontWeight: "bold",
             color: "blue",
@@ -242,7 +242,7 @@ const MyDocument = ({ proyecto }) => (
           }}
         >
           Rendimiento actual del proceso
-        </Text>
+        </Text> */}
 
         <Text
           style={{
@@ -355,7 +355,7 @@ const MyDocument = ({ proyecto }) => (
         </Text>
         <Text>{proyecto.posiblesSoluciones}</Text>
 
-        <Text
+        {/* <Text
           style={{
             fontWeight: "bold",
             color: "blue",
@@ -365,9 +365,9 @@ const MyDocument = ({ proyecto }) => (
           }}
         >
           Tolerancias operativas
-        </Text>
+        </Text> */}
 
-        <Text
+        {/* <Text
           style={{
             fontWeight: "bold",
             color: "blue",
@@ -377,9 +377,9 @@ const MyDocument = ({ proyecto }) => (
           }}
         >
           Experimentos de diseño
-        </Text>
+        </Text> */}
 
-        <Text
+        {/* <Text
           style={{
             fontWeight: "bold",
             color: "blue",
@@ -389,9 +389,9 @@ const MyDocument = ({ proyecto }) => (
           }}
         >
           Posibles mejoras
-        </Text>
+        </Text> */}
 
-        <Text
+        {/* <Text
           style={{
             fontWeight: "bold",
             color: "blue",
@@ -401,7 +401,7 @@ const MyDocument = ({ proyecto }) => (
           }}
         >
           Evaluaron y reevaluaron las posibles soluciones
-        </Text>
+        </Text> */}
         {/* {proyecto.mejorarcompletado === "Si" && (
           <Image
             style={styles.image}
@@ -427,7 +427,7 @@ const MyDocument = ({ proyecto }) => (
           Sistema de seguimiento y control
         </Text>
         <Text>{proyecto.sistemaSeguimiento}</Text>
-        <Text
+        {/* <Text
           style={{
             fontWeight: "bold",
             color: "blue",
@@ -437,7 +437,7 @@ const MyDocument = ({ proyecto }) => (
           }}
         >
           Control estadístico de los procesos
-        </Text>
+        </Text> */}
 
         <Text
           style={{
@@ -451,7 +451,7 @@ const MyDocument = ({ proyecto }) => (
           Plan de transferencia
         </Text>
         <Text>{proyecto.planTransferencia}</Text>
-        <Text
+        {/* <Text
           style={{
             fontWeight: "bold",
             color: "blue",
@@ -461,7 +461,7 @@ const MyDocument = ({ proyecto }) => (
           }}
         >
           Costes y el crecimiento de las ganancias
-        </Text>
+        </Text> */}
         {/* {proyecto.controlarcompletado === "Si" && (
           <Image
             style={styles.image}

@@ -16,7 +16,7 @@ function HomePage() {
     if (isLogin) {
       // Aquí puedes manejar el inicio de sesión
       try {
-        const response = await axios.post("http://localhost:3000/login", user, {
+        const response = await axios.post("https://rohisel.com/login", user, {
           withCredentials: true,
         });
         console.log(response.data);
@@ -34,10 +34,7 @@ function HomePage() {
     } else {
       // Aquí puedes manejar la creación del usuario
       try {
-        const response = await axios.post(
-          "http://localhost:3000/register",
-          user
-        );
+        const response = await axios.post("https://rohisel.com/register", user);
         console.log(response.data);
         if (response.data.message) {
           // Si hay un mensaje en la respuesta, mostrarlo
